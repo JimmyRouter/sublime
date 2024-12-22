@@ -1,0 +1,110 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="shortcut icon" href="{% static 'images/sk_logo.png' %}">
+    <title>СК МЕТР</title>
+</head>
+<body>
+    <div class="site-area grid-container">
+        <main class="main-content">
+            <div class="mainpage content" id="scrollelem">
+                <div class="wrapper rel">
+                    <header class="site-header">
+                        <div>
+                            <a href="{% url 'home' %}" class="a-header logobox">
+                                <img class="ui-icon" src="{% static 'images/logo.png' %}">
+                            </a>
+                        </div>
+                        <nav class="site-nav">
+                            <ul class="nav-ul">
+                                {% for item in nav %}
+                                <li class="nav-li">
+                                    <a class="a-header" href="{% url item.url|default:'home' %}">
+                                        <div class="nav-li-div">
+                                            <span>
+                                                {{ item.title }}
+                                            </span>
+                                            {% if item.nested %}
+                                            <div class="expand-div">
+                                                <ul class="expand-ul">
+                                                    {% for n_item in item.nested %}
+                                                    <li class="nav-li nested-li">
+                                                        {% if n_item.tag %}
+                                                        <a href="{% url n_item.url service_tag=n_item.tag %}" class="a-header nested-a">
+                                                        {% else %}
+                                                        <a href="{{ n_item.url }}" class="a-header nested-a">
+                                                        {% endif %}
+                                                            <div class="nav-li-div nested-div">
+                                                                <img src="{{n_item.ico}}">
+                                                                <span>
+                                                                    {{item.title}}
+                                                                </span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </nav>
+                    </header>
+                </div>
+
+                {% block maincontent %}
+                {% endblock %}
+
+                <footer class="content-block dark">
+                    <div class="wrapper">
+                        <div class="block-div">
+                            <div class="block-boxes">
+                                <div class="text-box">
+                                    <div class="textbox">
+                                        <a class="a-footer">
+                                            <img class="ui-icon foot-ico" src="{% static 'images/email.png' %}">
+                                            <strong>info@skmetr2.ru</strong>
+                                        </a>
+                                        <a class="a-footer">
+                                            <img class="ui-icon foot-ico" src="{% static 'images/phone.png' %}">
+                                            <strong>+7(938) 460-36-46</strong>
+                                        </a>
+                                        <a  class="a-footer" href="https://vk.com/skmetr2?ysclid=lsvjiltpm553260736">
+                                            <img class="ui-icon foot-ico" src="{% static 'images/vk.png' %}">
+                                            <strong>vk.com/skmetr2</strong>
+                                        </a>
+                                        <a  class="a-footer" href="https://t.me/skmetr2">
+                                            <img class="ui-icon foot-ico" src="{% static 'images/telegram.png' %}">
+                                            <strong>@skmetr2</strong>
+                                        </a>
+                                        <a class="a-footer" href="https://dzen.ru/skmetr2">
+                                            <img class="ui-icon foot-ico" src="{% static 'images/dzen.png' %}">
+                                            <strong>dzen.ru/skmetr2</strong>
+                                        </a>
+                                        <a class="a-footer">
+                                            <img class="ui-icon foot-ico" src="{% static 'images/location.png' %}">
+                                            <strong>354395, г. Сочи, ул. Гастелло, д. 30А, помещ. 47</strong>
+                                        </a>
+                                        <a class="a-footer">
+                                            <img class="ui-icon foot-ico" src="{% static 'images/inn.png' %}">
+                                            <strong>ИНН 9595854123</strong>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </main>
+    </div>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
+

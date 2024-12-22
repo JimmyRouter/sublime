@@ -1,0 +1,113 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="shortcut icon" href="{% static 'images/logo.png' %}">
+    <title>Sublime</title>
+</head>
+<body>
+    <div class="content" id="scrollelem">
+        <div class="head-wrap rel">
+            <div class="site-header abs">
+                <div>
+                    <a href="{% url 'home' %}" class="a-header logobox">
+                        <img class="ui-icon" src="{% static 'images/logo.png' %}">
+                    </a>
+                </div>
+                <div class="site-nav">
+                    <ul class="nav-ul">
+                        {% for item in nav %}
+                        <li class="nav-li">
+                            {% if item.url %}
+                            <a class="a-header" href="{% url item.url %}">
+                                <div class="nav-li-div">
+                                    <span>
+                                        {{ item.title }}
+                                    </span>
+                                </div>
+                            </a>
+                            {% endif %}
+                            {% if item.nested %}
+                            <a class="a-header">
+                                <div class="nav-li-div">
+                                    <span>
+                                        {{ item.title }}
+                                    </span>
+                                    <div class="expand-div">
+                                        <ul class="expand-ul">
+                                            {% for nested_item in item.nested %}
+                                            <li class="nav-li nested-li">
+                                                {% if nested_item.tag %}
+                                                <a href="{% url nested_item.url tag=nested_item.tag %}" class="a-header nested-a">
+                                                    <div class="nested-div">
+                                                        <img class="ui-icon" src="{% static nested_item.ico %}">
+                                                        <span>
+                                                            {{ nested_item.title }}
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                                {% else %}
+                                                <a href="{{ nested_item.url }}" class="a-header nested-a">
+                                                    <div class="nested-div">
+                                                        <img class="ui-icon" src="{% static nested_item.ico %}">
+                                                        <span>
+                                                            {{ nested_item.title }}
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                                {% endif %}
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </a>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                        <li class="nav-li">
+                            <div class="nav-li-div nav-contact">
+                                <span>
+                                    8 (800) 000 000
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% block maincontent %}
+        {% endblock %}
+        <div class="content-block  footer dark">
+            <div class="wrapper">
+                <div class="block-div">
+                    <div class="block-boxes">
+                        <div class="text-box">
+                            <div class="textbox">
+                                {% for product in nav.2.nested %}
+                                <a class="a-footer" href="{% url product.url tag=product.tag %}">
+                                    <span>{{ product.title }}</span>
+                                </a>
+                                {% endfor %}
+                            </div>
+                            <div class="textbox">
+                                {% for contact in nav.3.nested %}
+                                <a class="a-footer" href="{{ contact.url }}">
+                                    <img class="ui-icon foot-ico" src="{% static contact.ico %}">
+                                    <span>{{ contact.title }}</span>
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
+

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block maincontent %}
+    <div class="content-block">
+        <div class="banner-container rel">
+            <img class="banner-img" src="{{ product.img.url }}">
+        </div>
+        <div class="wrapper">
+            <h1 class="block-header">
+                <div class="frame-num"><img src="{{ product.ico.url }}"></div>
+                <span>{{ product.name }}</span>
+            </h1>
+            <div class="block-div">
+                <div class="vert-container">
+                    <div class="block-boxes">
+                        <div class="text-box">
+                            <div class="textbox servisetext">
+                                {% for p in product.list_description %}
+                                <span> {{ p }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <div class="content-block" id="connect_form">
+        <div class="wrapper">
+            <h1 class="block-header">
+                <div class="frame-num form-num"></div>
+                <span>
+                    Price: {{ product.unit_price }} usd per {{ product.unit }}
+                </span>
+            </h1>
+            <div class="block-div">
+                <div class="form-container">
+                    <form method="post" class="base-form">
+                        {% csrf_token %}
+                        {% for f in form %}
+                        <div class="field-div">
+                            <p class="form-field">
+                                <label class="form-label" for="{{ f.id_for_label }}">
+                                    {{f.label}}:
+                                </label>
+                                {{f}}
+                            </p>
+                            <div class="form-error">{{f.errors}}</div>
+                        </div>
+                        {% endfor %}
+                        <div class="btn-box">
+                            <button class="block-btn" type="submit"><strong>SEND ORDER</strong></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="vert-container">
+                    <div class="block-boxes">
+                        <div class="text-box">
+                            <div class="textbox">
+                                <span>Send us request:</span>
+                                <span>We'll contact you</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
